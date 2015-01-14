@@ -46,9 +46,20 @@ def giveName (adjectives, nouns):
   return cocktailname
 
 
-if __name__ == "__main__":
-    print constructDrink(askStyle(questions), ingredients)
+def main ():
+  """Main function, calls all other functions"""
+  #Gets order
+  order = True
+  while order == True:
+    #Gets style
+    style = askStyle(questions)
+    #Gets drink
+    print constructDrink(style, ingredients)
+    #Gets name
     print "This is the: " + giveName(adjectives, nouns)
-
+    order = raw_input("Do you want another order?").lower() in ["y","yes"]
+  
+if __name__ == "__main__":
+    main()
     
     
