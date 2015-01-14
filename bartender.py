@@ -33,7 +33,6 @@ def constructDrink (style, ingredients):
       drink.append (random.choice(ingredients[key]))
   return drink
 
-
 if __name__ == "__main__":
     print constructDrink(askStyle(questions), ingredients)
 
