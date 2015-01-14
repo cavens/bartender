@@ -16,27 +16,22 @@ ingredients = {
     "fruity": ["slice of orange", "dash of cassis", "cherry on top"]
 }
 
-
 def askStyle (questions):
   """Asks what style of drink"""
   style = {}
-  for key in questions:
-    style[key] = raw_input ("{} (y/n)".format(questions[key]))
-
-  for key in style:
-    if style[key] == "y" or style[key] == "yes":
-      style[key] = True
-    elif style[key] == "n" or style[key] == "no":
-      style[key] = False
+  for type, key in questions.iteritems():
+    print key
+    style[type] = raw_input().lower() in ["y", "yes"]
   return style
 
-    
+
 def constructDrink (style, ingredients):
   """Constructs the drink"""
-  drink = {}
+  drink = []
   for key in style:
-    drink[key] = random.choice(ingredients[key])
-  return drink.values()
+    if style[key] == True:
+      drink.append (random.choice(ingredients[key]))
+  return drink
 
 
 if __name__ == "__main__":
