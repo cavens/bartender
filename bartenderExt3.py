@@ -20,7 +20,11 @@ adjectives = ["Bored","Hardworking","Mysterious","Verbose","Laconic","Curious","
 
 nouns = ["rainbows","laser beams","senor","bunny","captain fantastic","nibblets","bipolar cupcake","carrot people","sock gnomes"
 ]
-     
+
+clients = {}
+
+stock = {"shake of bitters", "splash of tonic", "twist of lemon peel","glug of rum", "slug of whisky", "splash of gin","olive on a stick", "salt-dusted rim", "rasher of bacon","sugar cube", "spoonful of honey", "spash of cola","slice of orange", "dash of cassis", "cherry on top"}
+
 
 def askStyle (questions):
   """Asks what style of drink"""
@@ -31,12 +35,16 @@ def askStyle (questions):
   return style
 
 
-def constructDrink (style, ingredients):
+def constructDrink (style, ingredients, stock):
   """Constructs the drink"""
   drink = []
   for key in style:
     if style[key] == True:
-      drink.append (random.choice(ingredients[key]))
+      ingredient = random.choice(ingredients[key])
+      drink.append (ingredient)
+      stock[ingredient] -=1
+      if stock[ingredient] < -7:
+        stockManagement (stock)
   return drink
 
 
@@ -46,20 +54,36 @@ def giveName (adjectives, nouns):
   return cocktailname
 
 
-def main ():
-  """Main function, calls all other functions"""
-  #Gets order
-  order = True
-  while order == True:
-    #Gets style
-    style = askStyle(questions)
-    #Gets drink
-    print constructDrink(style, ingredients)
-    #Gets name
-    print "This is the: " + giveName(adjectives, nouns)
-    order = raw_input("Do you want another order?").lower() in ["y","yes"]
-  
+def stockManagement (stock):
+  """Checks whether bartender wants to restock"""
+  restock = raw_input("Do you want to restock?").lower() in ("y","yes")
+  if restock == True:
+    stock.clear()
+  else:
+    print "You shouldn't wait too long, dude..."
+    
+
+def main (clients):
+  """Main function, calls all other functions, manages clients"""
+  #Gets client name
+  clientname = raw_input ("What's your name please?")
+  while clientname.lower() != "stop":
+    if clientname in clients:
+      print "Let's make you a nice " + clients[clientname]
+      clientname = raw_input ("What's your name please?")
+    else :
+      #Gets style
+      style = askStyle(questions)
+      #Gets drink
+      print constructDrink(style, ingredients, stock)
+      #Gets name
+      cocktailname = giveName(adjectives, nouns)
+      print "This is the: " + cocktailname
+      clients [clientname] = cocktailname
+      clientname = raw_input ("What's your name please?")
+
+      
 if __name__ == "__main__":
-    main()
+    main(clients)
     
     
