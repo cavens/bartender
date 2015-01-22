@@ -35,7 +35,7 @@ def constructDrink (style, ingredients):
   """Constructs the drink"""
   drink = []
   for key in style:
-    if style[key] == True:
+    if style[key]:
       drink.append (random.choice(ingredients[key]))
   return drink
 
@@ -50,7 +50,7 @@ def main ():
   """Main function, calls all other functions"""
   #Gets order
   order = True
-  while order == True:
+  while order:
     #Gets style
     style = askStyle(questions)
     #Gets drink

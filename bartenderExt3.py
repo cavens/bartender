@@ -23,7 +23,12 @@ nouns = ["rainbows","laser beams","senor","bunny","captain fantastic","nibblets"
 
 clients = {}
 
-stock = {"shake of bitters", "splash of tonic", "twist of lemon peel","glug of rum", "slug of whisky", "splash of gin","olive on a stick", "salt-dusted rim", "rasher of bacon","sugar cube", "spoonful of honey", "spash of cola","slice of orange", "dash of cassis", "cherry on top"}
+clientDrinks = {}
+
+stock = "shake of bitters": 5,"lash of tonic": 5, "twist of lemon peel": 5,"glug of rum": 5, "slug of whisky": 5, "splash of gin": 5,"olive on a stick": 5, "salt-dusted rim": 5, "rasher of bacon": 5,"sugar cube": 5, "spoonful of honey": 5, "spash of cola": 5,"slice of orange": 5, "dash of cassis": 5, "cherry on top": 5}
+
+stockInit = {"shake of bitters": 5, "splash of tonic": 5, "twist of lemon peel": 5,"glug of rum": 5, "slug of whisky": 5, "splash of gin": 5,"olive on a stick": 5, "salt-dusted rim": 5, "rasher of bacon": 5,"sugar cube": 5, "spoonful of honey": 5, "spash of cola": 5,"slice of orange": 5, "dash of cassis": 5, "cherry on top": 5}
+
 
 
 def askStyle (questions):
@@ -35,17 +40,21 @@ def askStyle (questions):
   return style
 
 
-def constructDrink (style, ingredients, stock):
+def constructDrink (clientname, style, ingredients, stock):
   """Constructs the drink"""
+  if clientname in clients:
+    
   drink = []
   for key in style:
-    if style[key] == True:
+    if style[key]:
       ingredient = random.choice(ingredients[key])
       drink.append (ingredient)
-      stock[ingredient] -=1
-      if stock[ingredient] < -7:
-        stockManagement (stock)
+      stockManagement(ingredient)
+  giveName() = cocktailname
+  print "This is the: " + cocktailname
+  clients [clientname] = cocktailname
   return drink
+
 
 
 def giveName (adjectives, nouns):
@@ -54,36 +63,38 @@ def giveName (adjectives, nouns):
   return cocktailname
 
 
-def stockManagement (stock):
+def reStock ():
   """Checks whether bartender wants to restock"""
   restock = raw_input("Do you want to restock?").lower() in ("y","yes")
-  if restock == True:
-    stock.clear()
+  if restock:
+    stock = stockInit
   else:
     print "You shouldn't wait too long, dude..."
-    
 
-def main (clients):
+    
+def stockManagement (ingredient):
+  """Keeps track of the stock"""
+      stock[ingredient] -=1
+      if stock[ingredient] < 3:
+        reStock()
+
+    
+def main ():
   """Main function, calls all other functions, manages clients"""
   #Gets client name
-  clientname = raw_input ("What's your name please?")
-  while clientname.lower() != "stop":
+  while True:
+    clientname = raw_input ("What's your name please?")
+    if clientname.lower() == "stop": break
     if clientname in clients:
-      print "Let's make you a nice " + clients[clientname]
-      clientname = raw_input ("What's your name please?")
-    else :
+      constructDrink(clientName,"","","")
+    else:
       #Gets style
       style = askStyle(questions)
       #Gets drink
-      print constructDrink(style, ingredients, stock)
+      print constructDrink("",style, ingredients, stock)
       #Gets name
       cocktailname = giveName(adjectives, nouns)
-      print "This is the: " + cocktailname
-      clients [clientname] = cocktailname
-      clientname = raw_input ("What's your name please?")
-
       
 if __name__ == "__main__":
-    main(clients)
-    
+    main()
     
